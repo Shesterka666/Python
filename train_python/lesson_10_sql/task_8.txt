@@ -1,0 +1,33 @@
+CREATE TABLE IF NOT EXISTS employees (
+    employee_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    salary NUMERIC(10, 2) NOT NULL,
+    department INT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS departments (
+    department_id SERIAL PRIMARY KEY,
+    department_name VARCHAR(50) NOT NULL
+);
+
+INSERT INTO employees (first_name, last_name, salary) VALUES
+    ('John', 'Doe', 50000, 1),
+    ('Jane', 'Smith', 60000), 1,
+    ('Bob', 'Johnson', 55000, 2);
+
+INSERT INTO departments (department_name) VALUES
+    ('IT'),
+    ('HR'),
+    ('Finance');
+
+
+
+CREATE OR REPLACE FUNCTION delete_employee(employee_id INT)
+RETURNS VOID
+AS $$
+BEGIN
+    -- Здесь напишите запрос для удаления сотрудника по employee_id
+END;
+$$ LANGUAGE plpgsql;
+    
