@@ -26,4 +26,4 @@ with Session(engine) as session:
         session.add(user)
     with session.begin():
         res = session.execute(select(UserModel).where(UserModel.id == 1 ))
-        print(res.scalar())
+        print(res.scalar()) 
