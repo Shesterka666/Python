@@ -1,4 +1,3 @@
-
 CREATE TABLE IF NOT EXISTS employees (
     employee_id SERIAL PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
@@ -12,9 +11,9 @@ CREATE TABLE IF NOT EXISTS departments (
     department_name VARCHAR(50) NOT NULL
 );
 
-INSERT INTO employees (first_name, last_name, salary) VALUES
+INSERT INTO employees (first_name, last_name, salary,department) VALUES
     ('John', 'Doe', 50000, 1),
-    ('Jane', 'Smith', 60000), 1,
+    ('Jane', 'Smith', 60000, 1),
     ('Bob', 'Johnson', 55000, 2);
 
 INSERT INTO departments (department_name) VALUES
@@ -23,12 +22,14 @@ INSERT INTO departments (department_name) VALUES
     ('Finance');
     
     
-    
-    
-CREATE OR REPLACE FUNCTION get_employee_info(employee_id INT)
-RETURNS TABLE (first_name VARCHAR(50), last_name VARCHAR(50), salary NUMERIC(10, 2))
+CREATE OR REPLACE FUNCTION get_employee_info(id INT)
+RETURNS TABLE (first VARCHAR(50), last VARCHAR(50), sal NUMERIC(10, 2))
 AS $$
-BEGIN
+  BEGIN
+  return query
+  select first_name, last_name, salary 
+  from employees
+  where employee_id=id;
     -- Здесь напишите запрос для выбора информации о сотруднике по employee_id
 END;
 $$ LANGUAGE plpgsql;

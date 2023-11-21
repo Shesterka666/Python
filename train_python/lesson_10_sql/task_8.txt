@@ -11,9 +11,9 @@ CREATE TABLE IF NOT EXISTS departments (
     department_name VARCHAR(50) NOT NULL
 );
 
-INSERT INTO employees (first_name, last_name, salary) VALUES
+INSERT INTO employees (first_name, last_name, salary,department) VALUES
     ('John', 'Doe', 50000, 1),
-    ('Jane', 'Smith', 60000), 1,
+    ('Jane', 'Smith', 60000, 1),
     ('Bob', 'Johnson', 55000, 2);
 
 INSERT INTO departments (department_name) VALUES
@@ -23,11 +23,12 @@ INSERT INTO departments (department_name) VALUES
 
 
 
-CREATE OR REPLACE FUNCTION delete_employee(employee_id INT)
+CREATE OR REPLACE FUNCTION delete_employee(id_cur INT)
 RETURNS VOID
 AS $$
 BEGIN
-    -- Здесь напишите запрос для удаления сотрудника по employee_id
+   delete from employee
+   where employee_id = id_cur
+   commit;
 END;
 $$ LANGUAGE plpgsql;
-    

@@ -11,21 +11,23 @@ CREATE TABLE IF NOT EXISTS departments (
     department_name VARCHAR(50) NOT NULL
 );
 
-INSERT INTO employees (first_name, last_name, salary) VALUES
+INSERT INTO employees (first_name, last_name, salary,department) VALUES
     ('John', 'Doe', 50000, 1),
-    ('Jane', 'Smith', 60000), 1,
+    ('Jane', 'Smith', 60000, 1),
     ('Bob', 'Johnson', 55000, 2);
 
 INSERT INTO departments (department_name) VALUES
     ('IT'),
     ('HR'),
     ('Finance');
-    
 
-CREATE OR REPLACE FUNCTION increase_salary_in_department(department_name VARCHAR(50), percent_increase INT)
+CREATE OR REPLACE FUNCTION increase_salary_in_department(department_name123 VARCHAR(50), percent_increase INT)
 RETURNS VOID
 AS $$
 BEGIN
-    -- Здесь напишите запрос для увеличения зарплаты всех сотрудников в указанном отделе
+    update employees
+    set salary = salary + percent_increase
+    where department = (select department_id from departments where department_name = department_name123 );
+    commit;
 END;
 $$ LANGUAGE plpgsql;

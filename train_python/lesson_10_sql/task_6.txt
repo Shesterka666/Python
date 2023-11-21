@@ -1,3 +1,4 @@
+
 CREATE TABLE IF NOT EXISTS employees (
     employee_id SERIAL PRIMARY KEY,
     first_name VARCHAR(50) NOT NULL,
@@ -11,9 +12,9 @@ CREATE TABLE IF NOT EXISTS departments (
     department_name VARCHAR(50) NOT NULL
 );
 
-INSERT INTO employees (first_name, last_name, salary) VALUES
+INSERT INTO employees (first_name, last_name, salary,department) VALUES
     ('John', 'Doe', 50000, 1),
-    ('Jane', 'Smith', 60000), 1,
+    ('Jane', 'Smith', 60000, 1),
     ('Bob', 'Johnson', 55000, 2);
 
 INSERT INTO departments (department_name) VALUES
@@ -23,10 +24,18 @@ INSERT INTO departments (department_name) VALUES
     
 
 
-CREATE OR REPLACE FUNCTION get_avg_salary_in_department(department_name VARCHAR(50))
+
+CREATE OR REPLACE FUNCTION get_avg_salary_in_department(department_name_need VARCHAR(50))
 RETURNS NUMERIC(10, 2)
 AS $$
+DECLARE
+    itemCost numeric(10, 2);
 BEGIN
-    -- Здесь напишите запрос для расчета средней зарплаты в указанном отделе
+    select avg(salary) INTO itemCost
+    from employees
+    join departments on department=department_id
+    and department_name = department_name_need;
+    RETURN itemCost;
 END;
 $$ LANGUAGE plpgsql;
+select get_avg_salary_in_department('IT')
